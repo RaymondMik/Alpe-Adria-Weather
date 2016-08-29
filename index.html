@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <title>Alpe Adria Weather</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--apple code-->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" href="images/icon.png">
+	<link rel="apple-touch-icon-precomposed" href="images/icon.png">
+    <!--android code-->
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="shortcut icon" href="images/icon.png">
+
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/skycons.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+	
+	<script>
+    if ( screen.width > 767 && screenOrientation.matches ) {
+        screenOrientationMessage.style.display = "block";
+        console.log( "tablet portrait" );
+    }
+        
+	var skycons = new Skycons({"color": "pink"});
+	var icons = new Skycons(),
+	list  = [
+	"clear-day", "clear-night", "partly-cloudy-day",
+	"partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+	"fog"
+	],
+	i;
+	for(i = list.length; i--; )
+	icons.set(list[i], list[i]);
+	icons.play();
+	
+	var cities = {	"gorizia/nova gorica": { coords : {latitude: 45.943305, longitude: 13.617775}},
+					"trieste": { coords: {latitude: 45.649063, longitude: 13.386241}},
+					"grado": { coords: {latitude: 46.183505, longitude: 13.733185}},
+					"tolmin": { coords: {latitude: 46.183505, longitude: 13.733185}},
+					"bovec": { coords: {latitude: 46.337602, longitude: 13.551538}},
+					"kranjska gora": { coords: {latitude: 46.483856, longitude: 13.786024}}, 
+					"javornik": { coords: {latitude: 45.893621, longitude: 14.074779}},
+					"cerkno": { coords: {latitude: 46.129053, longitude: 13.990061}},
+					"ljubljana": { coords: {latitude: 46.056707, longitude: 14.508753}},
+					"klagenfurt": { coords: {latitude: 46.639086, longitude: 14.316188}},
+					"villach": { coords: {latitude: 46.608434, longitude: 13.850496}},
+					"current location": "" 
+	};
+	
+	function getWeather(cityCoords) {
+		console.log(cityCoords);
+		var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
+        // add your forecast.io URL here
+		var forecastURL = 'https://api.forecast.io/'+latlng;
+		
+		$.ajax({
+			url: forecastURL,
+			jsonpCallBack: 'jsonpCallBack',
+			contentType: 'application/json',
+			dataType: 'jsonp',
+			success: function(json) {
+				console.log(json);
+				$("#current_temperature").html(((json.currently.temperature - 32) / 1.8).toFixed(1) + " &#176" + "C");
+				$("#current_windSpeed").html("Wind Speed: " + json.currently.windSpeed + " knots");
+				$("#current_windBearing").html("Wind Bearing: " + json.currently.windBearing + " degrees");
+				$("#current_humidity").html("Relative Humidity: " + json.currently.humidity);
+				$("#current_summary").html(json.currently.summary);
+				icons.set("icon1", json.currently.icon);
+			},
+			error: function(e) {
+				console.log(e.message);
+			}
+		});
+	}
+	
+	function getCity(city){
+		$("#location").html(city);
+		
+		if (city.toLowerCase() == "current location"){
+			if ( navigator.geolocation ) {
+				navigator.geolocation.getCurrentPosition(getWeather, getDefaultCity);
+			} else {
+				getDefaultCity();
+			}
+		} else {
+			getWeather(cities[city.toLowerCase()]);
+		};
+	}
+	
+	function getDefaultCity() {
+		getDefaultCity("Gorizia/Nova Gorica")
+	};
+	
+	$(document).ready(function(){
+		getCity("Gorizia/Nova Gorica");
+		
+		$("a.city").on("click", function(){
+			getCity($(this).html());
+		})
+	})
+	
+	</script>
+	
+</head>
+    
+<body>
+    
+<div data-role="page">
+	<div data-role="panel" id="left-panel">
+		<ul data-role="listview">
+			<li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+			<li data-role="list-divider">Select a City</li>
+			<li><a href="#" class="city" data-rel="close">Current Location</a></li>
+			<li><a href="#" class="city" data-rel="close">Gorizia/Nova Gorica</a></li>
+			<li><a href="#" class="city" data-rel="close">Grado</a></li>
+			<li><a href="#" class="city" data-rel="close">Trieste</a></li>
+			<li><a href="#" class="city" data-rel="close">Tolmin</a></li>
+			<li><a href="#" class="city" data-rel="close">Bovec</a></li>
+			<li><a href="#" class="city" data-rel="close">Kranjska Gora</a></li>
+			<li><a href="#" class="city" data-rel="close">Javornik</a></li>
+			<li><a href="#" class="city" data-rel="close">Cerkno</a></li>
+			<li><a href="#" class="city" data-rel="close">Ljubljana</a></li>
+			<li><a href="#" class="city" data-rel="close">Klagenfurt</a></li>
+			<li><a href="#" class="city" data-rel="close">Villach</a></li>
+		</ul>
+	</div>
+	<div data-role="header" data-position="fixed" class="intestazione">
+		<img src="css/logo.png" alt="Logo Alpe Adria Weather"></img>
+		<a href="#left-panel" data-icon="bars" data-role="button" data-iconpos="notext" data-iconshadow="false" class="menu-button">Menu</a>
+	</div>
+	<div data-role="content" class="content">
+		<div class="primary-content">
+		<h2 id="location">Current Location</h2>
+			<canvas id="icon1" width="120" height="120"></canvas>
+			<h1 id="current_temperature"></h1>
+			<h2 id="current_summary"></h2>
+		</div>
+		<div class="secondary-content">
+			<p id="current_windSpeed"></p>
+			<p id="current_windBearing"></p>
+			<p id="current_humidity"></p>
+		</div>
+	</div>
+</div>
+    
+</body>
+    
+</html>

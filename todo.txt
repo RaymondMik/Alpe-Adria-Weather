@@ -1,0 +1,13 @@
+TO DO
+- Layout
+- Nome current location
+- Inserisci città mancanti OK
+- gradi F in centigradi OK
+- aggiungi umidita OK
+- aggiungi velocità vento OK
+- aggiungi ora locale per current location
+- metti icone animate OK
+
+poi:
+crea app ibrida con phone gap
+cerca api non a pagamento
