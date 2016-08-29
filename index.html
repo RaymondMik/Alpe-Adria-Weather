@@ -20,9 +20,10 @@
 	<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 	
 	<script>
-    if ( screen.width > 767 && screenOrientation.matches ) {
-        screenOrientationMessage.style.display = "block";
-        console.log( "tablet portrait" );
+ 
+    if ( screen.width > 800 ) {
+        alert("Sorry, this application is meant for mobile devices only");
+        window.close();
     }
         
 	var skycons = new Skycons({"color": "pink"});
