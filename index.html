@@ -2,24 +2,23 @@
 <html>
     
 <head>
-    <title>Alpe Adria Weather</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Alpe Adria Weather</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--apple code-->
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="apple-touch-icon" href="images/icon.png">
 	<link rel="apple-touch-icon-precomposed" href="images/icon.png">
-    <!--android code-->
+	<!--android code-->
 	<meta name="mobile-web-app-capable" content="yes">
 	<link rel="shortcut icon" href="images/icon.png">
-
+	
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<script src="js/skycons.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
 	
-	<script>
+<script>
  
     if ( screen.width > 800 ) {
         alert("Sorry, this application is meant for mobile devices only");
@@ -39,24 +38,24 @@
 	icons.play();
 	
 	var cities = {	"gorizia/nova gorica": { coords : {latitude: 45.943305, longitude: 13.617775}},
-					"trieste": { coords: {latitude: 45.649063, longitude: 13.386241}},
-					"grado": { coords: {latitude: 46.183505, longitude: 13.733185}},
-					"tolmin": { coords: {latitude: 46.183505, longitude: 13.733185}},
-					"bovec": { coords: {latitude: 46.337602, longitude: 13.551538}},
-					"kranjska gora": { coords: {latitude: 46.483856, longitude: 13.786024}}, 
-					"javornik": { coords: {latitude: 45.893621, longitude: 14.074779}},
-					"cerkno": { coords: {latitude: 46.129053, longitude: 13.990061}},
-					"ljubljana": { coords: {latitude: 46.056707, longitude: 14.508753}},
-					"klagenfurt": { coords: {latitude: 46.639086, longitude: 14.316188}},
-					"villach": { coords: {latitude: 46.608434, longitude: 13.850496}},
-					"current location": "" 
+			"trieste": { coords: {latitude: 45.649063, longitude: 13.386241}},
+			"grado": { coords: {latitude: 46.183505, longitude: 13.733185}},
+			"tolmin": { coords: {latitude: 46.183505, longitude: 13.733185}},
+			"bovec": { coords: {latitude: 46.337602, longitude: 13.551538}},
+			"kranjska gora": { coords: {latitude: 46.483856, longitude: 13.786024}}, 
+			"javornik": { coords: {latitude: 45.893621, longitude: 14.074779}},
+			"cerkno": { coords: {latitude: 46.129053, longitude: 13.990061}},
+			"ljubljana": { coords: {latitude: 46.056707, longitude: 14.508753}},
+			"klagenfurt": { coords: {latitude: 46.639086, longitude: 14.316188}},
+			"villach": { coords: {latitude: 46.608434, longitude: 13.850496}},
+			"current location": "" 
 	};
 	
 	function getWeather(cityCoords) {
 		console.log(cityCoords);
 		var latlng = cityCoords.coords.latitude + "," + cityCoords.coords.longitude;
-        // add your forecast.io URL here
-		var forecastURL = 'https://api.forecast.io/'+latlng;
+                // add your forecast.io API KEY here
+		var forecastURL = 'https://api.forecast.io/YOURAPIKEY'+latlng;
 		
 		$.ajax({
 			url: forecastURL,
@@ -104,7 +103,7 @@
 		})
 	})
 	
-	</script>
+</script>
 	
 </head>
     
